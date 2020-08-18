@@ -2,6 +2,18 @@ version: "3.8"
 
 services:
 
+  audience-service:
+    build:
+      context: ./services/audience-service
+    ports:
+      - 3001:3000
+  
+  greeting-service:
+    build:
+      context: ./services/greeting-service
+    ports:
+      - 3002:3000
+
   api:
     build:
       context: ./services/api
