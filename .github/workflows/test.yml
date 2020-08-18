@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version": "2.4"
+          ruby-version: "2.4"
       - run: ./services/api/test.sh
 
   test-complete:
