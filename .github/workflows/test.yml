@@ -1,0 +1,30 @@
+on:
+  push:
+  pull_request:
+
+jobs:
+  
+  test-audience-service:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./services/audience-service/test.sh
+
+  test-greeting-service:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./services/audience-service/test.sh
+
+  test-complete:
+
+    needs: [test-audience-service, test-greeting-service]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Tests passed!"
