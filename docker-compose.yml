@@ -3,18 +3,21 @@ version: "3.8"
 services:
 
   audience-service:
+    image: "jbrunton/test-workflows-audience-service:${TAG?}"
     build:
       context: ./services/audience-service
     ports:
       - 3001:3000
   
   greeting-service:
+    image: "jbrunton/test-workflows-greeting-service:${TAG?}"
     build:
       context: ./services/greeting-service
     ports:
       - 3002:3000
 
   api:
+    image: "jbrunton/test-workflows-api:${TAG?}"
     build:
       context: ./services/api
     ports:
