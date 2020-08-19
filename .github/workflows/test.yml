@@ -42,13 +42,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
       - name: check
         uses: mikefarah/yq@3.3.2
         with:
-          cmd: |
-            MANIFEST_VERSION=$(yq r manifest.yml version)
-            BUILD_INFO=$(yq r build/catalog.yml 'builds.(version==$MANIFEST_VERSION)')
-            echo "::set-output name=buildRequired::$([ -z "$BUILD_INFO" ] && echo 0 || echo 1)"
+          cmd: ./ci/check_manifest.sh
       - name: trigger build
         if: steps.check.outputs.buildRequired == true
         run: Build required!
