@@ -37,16 +37,15 @@ jobs:
 
   manifest-check:
 
-    needs: [test-audience-service, test-greeting-service, test-api]
+    needs: [test-audience-service, test-greeting-servicem, test-api]
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+      - uses: chrisdickinson/setup-yq@v1.0.0
       - name: check
-        uses: mikefarah/yq@3.3.2
-        with:
-          cmd: ./ci/check_manifest.sh
+        run: ./ci/check_manifest.sh
       - name: trigger build
         if: steps.check.outputs.buildRequired == true
         run: Build required!
