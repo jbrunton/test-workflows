@@ -1,0 +1,5 @@
+builds:
+  - version: 0.1
+    buildSha: a59a1bf
+    imageTag: 0.1
+    timestamp: '2020-08-19T14:28:08.375Z'

@@ -8,38 +8,42 @@ on:
 
 jobs:
   
-  test-audience-service:
+  # test-audience-service:
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: ./services/audience-service/test.sh
+
+  # test-greeting-service:
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - run: ./services/audience-service/test.sh
+
+  # test-api:
+
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: "2.4"
+  #     - run: ./services/api/test.sh
+
+  manifest-check:
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - run: ./services/audience-service/test.sh
-
-  test-greeting-service:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./services/audience-service/test.sh
-
-  test-api:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "2.4"
-      - run: ./services/api/test.sh
-
-  test-complete:
-
-    needs: [test-audience-service, test-greeting-service, test-api]
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - run: echo "Tests passed!"
+      - uses: chrisdickinson/setup-yq@v1.0.0
+      - name: check
+        run: ./ci/check_manifest.sh
+      - name: trigger build
+        if: steps.check.outputs.buildRequired == true
+        run: Build required!

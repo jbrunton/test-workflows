@@ -3,13 +3,16 @@ version: "3.8"
 services:
 
   audience-service:
+    image: test-workflows-audience-service
     volumes:
       - ./services/audience-service:/app
   
   greeting-service:
+    image: test-workflows-greeting-service
     volumes:
       - ./services/greeting-service:/app
 
   api:
+    image: test-workflows-api
     volumes:
       - ./services/api:/app
