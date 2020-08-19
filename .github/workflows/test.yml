@@ -35,11 +35,20 @@ jobs:
           ruby-version: "2.4"
       - run: ./services/api/test.sh
 
-  test-complete:
+  manifest-check:
 
     needs: [test-audience-service, test-greeting-service, test-api]
 
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "Tests passed!"
+      - name: check
+        uses: mikefarah/yq@3.3.2
+        with:
+          cmd: |
+            MANIFEST_VERSION=$(yq r manifest.yml version)
+            BUILD_INFO=$(yq r build/catalog.yml 'builds.(version==$MANIFEST_VERSION)')
+            echo "::set-output name=buildRequired::$([ -z "$BUILD_INFO" ] && echo 0 || echo 1)"
+      - name: trigger build
+        if: steps.check.outputs.buildRequired == true
+        run: Build required!
